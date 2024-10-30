@@ -25,6 +25,7 @@ import { CompanyNodeModule } from './modules/company-node/company-node.module';
 import { CompanyFeeSchemeModule } from './modules/company-fee-scheme/company-fee-scheme.module';
 import { CompanyTeamsModule } from './modules/company-teams/company-teams.module';
 import { PrivateNotesModule } from './modules/private-notes/private-notes.module';
+import { WalletUsersModule } from './wallet-users/wallet-users.module';
 
 @Module({
   imports: [
@@ -55,6 +56,7 @@ import { PrivateNotesModule } from './modules/private-notes/private-notes.module
     CompanyFeeSchemeModule,
     CompanyTeamsModule,
     PrivateNotesModule,
+    WalletUsersModule,
   ],
   controllers: [AppController],
   providers: [
