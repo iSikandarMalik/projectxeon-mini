@@ -1,6 +1,3 @@
-import { IsEmail } from 'class-validator';
-import { Session } from 'src/modules/session/entities/session.entity';
-import { Company } from 'src/modules/company/entities/company.entity'; // Import the Company entity
 import {
   Entity,
   Column,
@@ -13,7 +10,10 @@ import {
   Unique,
   OneToOne,
 } from 'typeorm';
+import { IsEmail } from 'class-validator';
 import { v4 as uuidv4 } from 'uuid';
+import { Session } from 'src/modules/session/entities/session.entity';
+import { Company } from 'src/modules/company/entities/company.entity';
 import { UserProfile } from './user-profile.entity';
 import { Permission } from 'src/modules/company-teams/entity/user-permission.entity';
 import { ActivityLog } from 'src/modules/company-teams/entity/user-activity-logs.entity';
@@ -33,22 +33,17 @@ export class User {
     this.user_id = uuidv4();
   }
 
-  @Column()
+  @Column({ nullable: true })
   first_name: string;
 
-  @Column()
+  @Column({ nullable: true })
   last_name: string;
 
-  @Column({
-    type: 'varchar',
-    nullable: false,
-  })
+  @Column({ type: 'varchar', nullable: true })
   @IsEmail({}, { message: 'Email must be a valid email address' })
   email: string;
 
-  @Column({
-    type: 'varchar',
-  })
+  @Column({ type: 'varchar', nullable: true })
   password: string;
 
   @Column({
@@ -75,13 +70,10 @@ export class User {
     this.updated_at = new Date();
   }
 
-  @Column({ default: false })
+  @Column({ default: false, nullable: true })
   status: boolean;
 
-  @Column({
-    type: 'varchar',
-    nullable: true,
-  })
+  @Column({ type: 'varchar', nullable: true })
   role: string;
 
   @Column({ nullable: true })
@@ -90,10 +82,18 @@ export class User {
   @Column({ nullable: true })
   authenticator_secret: string;
 
+  @Column({ nullable: true })
+  walletName: string;
+
+  @Column({ nullable: true })
+  passcode: string;
+
+  @Column({ nullable: true })
+  userName: string;
+
   @OneToMany(() => Session, (session) => session.user)
   sessions: Session[];
 
-  // Use company_id as an integer foreign key
   @ManyToOne(() => Company)
   @JoinColumn({ name: 'company_id' })
   company: Company;
